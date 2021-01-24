@@ -40,7 +40,7 @@ export const deleteMovie = (id: number) => {
 
 export const addMovie = (title: string, rating: number) => {
   const newMovie = {
-    id: Number(`${movies.length + 1}`),
+    id: Number(`${movies[movies.length - 1].id + 1}`),
     title,
     rating,
   }
