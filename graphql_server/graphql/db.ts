@@ -3,6 +3,7 @@ import axios from "axios"
 const BASE_URL = "https://yts.mx/api/v2/"
 const LIST_MOVIES_URL = `${BASE_URL}list_movies.json?`
 const MOVIE_DETAILS_URL = `${BASE_URL}movie_details.json?`
+const MOVIE_SUGGESTIONS_URL = `${BASE_URL}movie_suggestions.json`
 
 export const getMovies = async (limit: number, rating: number) => {
   const {
@@ -29,6 +30,19 @@ export const getMovie = async (id: number) => {
     },
   })
   return movie
+}
+
+export const getSuggestions = async (id: number) => {
+  const {
+    data: {
+      data: { movies },
+    },
+  } = await axios(MOVIE_SUGGESTIONS_URL, {
+    params: {
+      movie_id: id,
+    },
+  })
+  return movies
 }
 
 /*
