@@ -1,5 +1,8 @@
 import React from "react"
 import { gql, useQuery } from "@apollo/client"
+import styled from "styled-components"
+
+import Movie from "components/Movie"
 
 const GET_MOVIES = gql`
   {
@@ -10,22 +13,70 @@ const GET_MOVIES = gql`
   }
 `
 
-const Home = () => {
-  const { loading, error, data } = useQuery(GET_MOVIES)
-  console.log(loading, error, data)
+interface IMovie {
+  id: number
+  medium_cover_image: string
+}
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`
+
+const Header = styled.header`
+  background-image: linear-gradient(-45deg, #d754ab, #fd723a);
+  height: 45vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`
+
+const Title = styled.h1`
+  font-size: 60px;
+  font-weight: 600;
+  margin-bottom: 20px;
+`
+
+const Subtitle = styled.h3`
+  font-size: 35px;
+`
+
+const Loading = styled.div`
+  font-size: 18px;
+  opacity: 0.5;
+  font-weight: 500;
+  margin-top: 10px;
+`
+
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 60%;
+  position: relative;
+  top: -50px;
+`
+
+const Home = () => {
+  const { loading, data } = useQuery(GET_MOVIES)
   return (
-    <>
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <>
-          {data.movies.map((v: { id: number; medium_cover_image: string }) => (
-            <h1 key={v.id}>{v.id}</h1>
-          ))}
-        </>
-      )}
-    </>
+    <Container>
+      <Header>
+        <Title>Apollo 2020</Title>
+        <Subtitle>I love GraphQL</Subtitle>
+      </Header>
+      {loading && <Loading>Loading...</Loading>}
+      <Movies>
+        {data?.movies?.map((v: IMovie) => (
+          <Movie key={v.id} id={v.id} bg={v.medium_cover_image} />
+        ))}
+      </Movies>
+    </Container>
   )
 }
 
