@@ -4,7 +4,7 @@ const cache = new InMemoryCache()
 
 const client = new ApolloClient({
   cache: cache,
-  uri: "https://movieql.now.sh/",
+  uri: "http://localhost:4000/",
 })
 
 export default client
