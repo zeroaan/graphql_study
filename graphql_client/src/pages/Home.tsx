@@ -5,8 +5,8 @@ import styled from "styled-components"
 import Movie from "components/Movie"
 
 const GET_MOVIES = gql`
-  {
-    movies {
+  query getMovies($limit: Int, $rating: Float) {
+    movies(limit: $limit, rating: $rating) {
       id
       medium_cover_image
     }
@@ -63,11 +63,13 @@ const Movies = styled.div`
 `
 
 const Home = () => {
-  const { loading, data } = useQuery(GET_MOVIES)
+  const { loading, data } = useQuery(GET_MOVIES, {
+    variables: { limit: 40, rating: 8.5 },
+  })
   return (
     <Container>
       <Header>
-        <Title>Apollo 2020</Title>
+        <Title>Apollo 2021</Title>
         <Subtitle>I love GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
