@@ -9,6 +9,8 @@ const GET_MOVIES = gql`
     movies(limit: $limit, rating: $rating) {
       id
       medium_cover_image
+      title
+      rating
     }
   }
 `
@@ -16,6 +18,8 @@ const GET_MOVIES = gql`
 interface IMovie {
   id: number
   medium_cover_image: string
+  title: string
+  rating: number
 }
 
 const Container = styled.div`
@@ -69,13 +73,13 @@ const Home = () => {
   return (
     <Container>
       <Header>
-        <Title>Apollo 2021</Title>
-        <Subtitle>I love GraphQL</Subtitle>
+        <Title>Movie App 2021</Title>
+        <Subtitle>Apollo & GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
       <Movies>
         {data?.movies?.map((v: IMovie) => (
-          <Movie key={v.id} id={v.id} bg={v.medium_cover_image} />
+          <Movie key={v.id} id={v.id} bg={v.medium_cover_image} title={v.title} rating={v.rating} />
         ))}
       </Movies>
     </Container>
