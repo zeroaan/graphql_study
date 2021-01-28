@@ -12,8 +12,17 @@ const GET_MOVIE = gql`
       rating
       description_intro
     }
+    suggestions(id: $id) {
+      id
+      medium_cover_image
+    }
   }
 `
+
+interface ISuggestions {
+  id: string
+  medium_cover_image: string
+}
 
 const Container = styled.div`
   height: 100vh;
