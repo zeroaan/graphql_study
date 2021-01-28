@@ -1,12 +1,20 @@
 import React from "react"
+import { gql, useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+
+const LIKE_MOVIE = gql`
+  mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
+    toggleLikeMovie(id: $id, isLiked: $isLiked) @client
+  }
+`
 
 interface Props {
   id: number
   bg: string
   title: string
   rating: number
+  isLiked: boolean
 }
 
 const PosterHover = styled.div`
@@ -59,7 +67,11 @@ const PosterDesc = styled.p`
   line-height: 25px;
 `
 
-const Movie = ({ id, bg, title, rating }: Props) => {
+const Movie = ({ id, bg, title, rating, isLiked }: Props) => {
+  const [toggleLikeMovie] = useMutation(LIKE_MOVIE, {
+    variables: { id, isLiked },
+  })
+
   return (
     <Container>
       <LinkStyled to={`/${id}`}>
@@ -69,6 +81,7 @@ const Movie = ({ id, bg, title, rating }: Props) => {
           <PosterDesc>⭐{rating}</PosterDesc>
         </PosterHover>
       </LinkStyled>
+      <button onClick={() => toggleLikeMovie()}>{isLiked ? "Unlike" : "Like"}</button>
     </Container>
   )
 }

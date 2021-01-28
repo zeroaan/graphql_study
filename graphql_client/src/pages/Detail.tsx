@@ -19,11 +19,6 @@ const GET_MOVIE = gql`
   }
 `
 
-interface ISuggestions {
-  id: string
-  medium_cover_image: string
-}
-
 const Container = styled.div`
   height: 100vh;
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);

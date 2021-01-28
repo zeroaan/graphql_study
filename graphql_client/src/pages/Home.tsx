@@ -11,6 +11,7 @@ const GET_MOVIES = gql`
       medium_cover_image
       title
       rating
+      isLiked @client
     }
   }
 `
@@ -20,6 +21,7 @@ interface IMovie {
   medium_cover_image: string
   title: string
   rating: number
+  isLiked: boolean
 }
 
 const Container = styled.div`
@@ -79,7 +81,7 @@ const Home = () => {
       {loading && <Loading>Loading...</Loading>}
       <Movies>
         {data?.movies?.map((v: IMovie) => (
-          <Movie key={v.id} id={v.id} bg={v.medium_cover_image} title={v.title} rating={v.rating} />
+          <Movie key={v.id} id={v.id} isLiked={v.isLiked} bg={v.medium_cover_image} title={v.title} rating={v.rating} />
         ))}
       </Movies>
     </Container>
